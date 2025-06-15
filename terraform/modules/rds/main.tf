@@ -1,3 +1,6 @@
+/* -----------------------------
+RDS
+-------------------------------*/
 resource "aws_db_subnet_group" "subnet" {
   name = "main"
   subnet_ids = [aws_subnet.private.id]

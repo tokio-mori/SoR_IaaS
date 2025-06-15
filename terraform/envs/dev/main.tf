@@ -5,3 +5,7 @@ module "vpc" {
 module "ec2" {
   source = "../../modules/ec2"
 }
+
+module "redis_sg" {
+  source = "../../modules/elasticache"
+}
