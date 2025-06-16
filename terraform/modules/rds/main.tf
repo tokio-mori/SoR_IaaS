@@ -1,9 +1,13 @@
-/* -----------------------------
-RDS
--------------------------------*/
+module "kms" {
+  source = "../kms/kmsRds"
+}
+module "vpc" {
+  source = "../vpc"
+}
+
 resource "aws_db_subnet_group" "subnet" {
   name = "main"
-  subnet_ids = [aws_subnet.private.id]
+  subnet_ids = ["../vpc/main.tf/aws_subnet.private.id"]
 
   tags = {
     Name = "private subnet group"
@@ -27,9 +31,9 @@ resource "aws_db_option_group" "option" {
   }
 }
 
-data "aws_kms_key" "kms" {
-  key_id = "hoge"
-}
+# data "aws_kms_key" "kms" {
+#   key_id = aws_kms_alias.aliasrds.arn
+# }
 
 resource "aws_db_parameter_group" "default" {
   name   = "rds-pg"
@@ -50,23 +54,22 @@ resource "aws_db_instance" "instance" {
   allocated_storage = 10
   max_allocated_storage = 100
   auto_minor_version_upgrade = false
-  //custom_iam_instance_profile = hoge
   backup_retention_period = 7
-  engine = hoge
-  engine_version = hoge
+  engine = "mysql"
+  engine_version = "8.0.41"
   identifier = "app"
-  instance_class = hoge
-  kms_key_id = hoge
+  instance_class = "db.m5d.large"
+  kms_key_id = module.kms.aliasrds_arn
   multi_az = true
-  password = hoge
+  password = "TestPassword"
   username = "admin"
   storage_encrypted = true
   backup_window = "09:10-09:40"
   maintenance_window = "mon:10:10-mon:10:40"
-  vpc_security_group_ids = hoge
-  parameter_group_name = hoge
-  option_group_name = hoge
-  db_subnet_group_name = hoge
+  vpc_security_group_ids = [module.vpc.security_group_id]
+  parameter_group_name = aws_db_parameter_group.default.name
+  option_group_name = aws_db_option_group.option.name
+  db_subnet_group_name = aws_db_subnet_group.subnet.name
 
   lifecycle {
     ignore_changes = [ password ]

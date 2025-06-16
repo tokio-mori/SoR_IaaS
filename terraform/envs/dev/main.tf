@@ -9,3 +9,7 @@ module "ec2" {
 module "redis_sg" {
   source = "../../modules/elasticache"
 }
+
+module "rds" {
+  source = "../../modules/rds"  
+}

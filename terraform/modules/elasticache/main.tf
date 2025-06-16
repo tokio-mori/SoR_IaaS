@@ -10,14 +10,14 @@ resource "aws_elasticache_parameter_group" "elasticache" {
 
 resource "aws_elasticache_subnet_group" "subnet" {
   name = "elasticache-subnet"
-  subnet_ids = [ aws_subnet.private.id ]
+  subnet_ids = ["../vpc/main.tf/aws_subnet.private.id"]
 }
 
 resource "aws_elasticache_replication_group" "replication" {
   replication_group_id = "primary"
   description = "elasticache to primary"
   engine = "redis"
-  engine_version = "7.22.0"
+  engine_version = "7.22"
   num_cache_clusters = 2
   node_type = "cache.t3.medium"
   snapshot_window = "09:10-10:10"
