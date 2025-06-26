@@ -1,4 +1,4 @@
-resource "aws_launch_template" "template" {
+resource "aws_launch_template" "main" {
   name = "template"
   image_id = ami.id
   instance_type = "var.instance_type"

@@ -1,3 +1,7 @@
+# module "aws_launch_template" {
+#   source = "../launchTemplate"
+# }
+
 resource "aws_autoscaling_group" "asg" {
   name = "dev-autoscaling"
   vpc_zone_identifier = ["aws_subnet.private.id"]
@@ -10,8 +14,8 @@ resource "aws_autoscaling_group" "asg" {
   desired_capacity = 2
 
   launch_template {
-    id = aws_launch_template.hoge
-    version = "$Latest"
+    id = var.launch_template_id
+    version = var.launch_tempalte_version
   }
 
   tag {
