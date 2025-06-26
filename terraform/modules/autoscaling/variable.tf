@@ -3,7 +3,7 @@ variable "launch_template_id" {
   type = string
 }
 
-variable "launch_tempalte_version" {
+variable "launch_tempalate_version" {
   description = "Launch Template Verison"
   default = "$Latest"
 }

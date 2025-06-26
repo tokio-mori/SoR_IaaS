@@ -1,3 +1,3 @@
-output "aliasrds_arn" {
-  value = aws_kms_alias.aliasrds.arn
+output "launch_template_id" {
+  value = aws_launch_template.main.id
 }
