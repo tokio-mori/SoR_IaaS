@@ -1,7 +1,7 @@
 resource "aws_api_gateway_vpc_link" "vpc_link" {
   name = "vpc-link"
   description = "VPC Link for API Gateway to ALB"
-  target_arns = [ aws_lb.alb.arn ]
+  target_arns = [ "aws_lb_alb.arn" ]
 }
 
 resource "aws_api_gateway_rest_api" "rest_api" {
@@ -35,7 +35,7 @@ resource "aws_api_gateway_integration" "api_root" {
   connection_type = "VPC_LINK"
   connection_id = aws_api_gateway_vpc_link.vpc_link.id
 
-  uri = "http://${aws_lb.alb.dns_name}/api"
+  uri = "http://${var.alb_dns_name}/api"
 }
 
 resource "aws_api_gateway_deployment" "main" {

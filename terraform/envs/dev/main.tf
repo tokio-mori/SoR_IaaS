@@ -23,10 +23,24 @@ module "auto_scaling" {
   launch_template_id = module.launch_tempalate.launch_template_id
 }
 
-# module "redis_sg" {
-#   source = "../../modules/elasticache"
-# }
+module "redis_sg" {
+  source = "../../modules/elasticache"
+}
 
-# module "rds" {
-#   source = "../../modules/rds"  
-# }
+module "rds" {
+  source = "../../modules/rds"  
+}
+
+module "alb" {
+  source = "../../modules/alb"
+
+  subnet_private_id = module.vpc.aws_subnet_private_id
+  aws_vpc_id = module.vpc.aws_vpc_id
+}
+
+module "name" {
+  source = "../../modules/apiGateway"
+
+  aws_lb_alb = module.alb.aws_lb_alb
+  alb_dns_name = module.alb.alb_dns_name
+}

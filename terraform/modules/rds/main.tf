@@ -31,10 +31,6 @@ resource "aws_db_option_group" "option" {
   }
 }
 
-# data "aws_kms_key" "kms" {
-#   key_id = aws_kms_alias.aliasrds.arn
-# }
-
 resource "aws_db_parameter_group" "default" {
   name   = "rds-pg"
   family = "mysql5.6"

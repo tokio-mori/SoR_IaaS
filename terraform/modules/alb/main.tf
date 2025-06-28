@@ -1,13 +1,9 @@
-module "vpc" {
-  source = "../vpc"
-}
-
 resource "aws_lb" "alb" {
   name = "alb"
   internal = true
   load_balancer_type = "application"
   security_groups = ["aws_security_group.sg.id"]
-  subnets = "aws_subnet.private.id"
+  subnets = [var.subnet_private_id]
 
   enable_deletion_protection = false
 
@@ -21,7 +17,7 @@ resource "aws_lb_target_group" "tg" {
   name = "tg"
   port = 80
   protocol = "HTTP"
-  vpc_id = module.vpc.vpc_id
+  vpc_id = var.aws_vpc_id
 }
 
 resource "aws_lb_listener" "listener" {

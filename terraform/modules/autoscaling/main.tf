@@ -1,7 +1,3 @@
-# module "aws_launch_template" {
-#   source = "../launchTemplate"
-# }
-
 resource "aws_autoscaling_group" "asg" {
   name = "dev-autoscaling"
   vpc_zone_identifier = ["aws_subnet.private.id"]
